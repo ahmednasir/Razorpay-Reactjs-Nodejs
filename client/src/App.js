@@ -28,8 +28,8 @@ function App() {
       return;
     }
 
-    const result = await axios.post("http://localhost:5000/payment/orders");
-    console.log(result.data)
+    const result = await axios.post("http://localhost:5000/payment/create-orders");
+    
     if (!result) {
       alert("Server error. Are you online?");
       return;
@@ -38,7 +38,7 @@ function App() {
     const { amount, id: order_id, currency } = result.data;
 
     const options = {
-      key: "xxxxxxxxxxx", // Enter the Key ID generated from the Dashboard
+      key: "xxxxxx", // Enter the Key ID generated from the Dashboard
       amount: amount.toString(),
       currency: currency,
       name: "Soumya Corp.",
@@ -46,7 +46,7 @@ function App() {
       image: { logo },
       order_id: order_id,
       handler: async function (response) {
-        console.log(response)
+        
         const data = {
           orderCreationId: order_id,
           razorpayPaymentId: response.razorpay_payment_id,
@@ -54,7 +54,8 @@ function App() {
           razorpaySignature: response.razorpay_signature,
         };
 
-        const result = await axios.post("http://localhost:5000/payment/success", data);
+        const result = await axios.post("http://localhost:5000/payment/store-order", data);
+        console.log(result.data)
 
       },
       prefill: {

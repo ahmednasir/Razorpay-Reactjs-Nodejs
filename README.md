@@ -31,6 +31,9 @@ For environment variables put the keys in `.env` file
 ```sh
 RAZORPAY_SECRET=<your razorpay secret>
 RAZORPAY_KEY_ID=<your razorpay ket id>
+MONGO_USERNAME=<your username>
+MONGO_PASSWORD=<your password>
+MONGO_DB_NAME=<your collection name>
 ```
 
 ## Plugins
