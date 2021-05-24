@@ -28,8 +28,8 @@ function App() {
       return;
     }
 
-    const result = await axios.post("http://localhost:5000/payment/create-orders");
-    
+    const result = await axios.post("http://localhost:5000/payment/create-orders", { amount: 500, currency: "INR" });
+
     if (!result) {
       alert("Server error. Are you online?");
       return;
@@ -41,12 +41,12 @@ function App() {
       key: "xxxxxx", // Enter the Key ID generated from the Dashboard
       amount: amount.toString(),
       currency: currency,
-      name: "Soumya Corp.",
+      name: "User Corp.",
       description: "Test Transaction",
       image: { logo },
       order_id: order_id,
       handler: async function (response) {
-        
+
         const data = {
           orderCreationId: order_id,
           razorpayPaymentId: response.razorpay_payment_id,
@@ -59,12 +59,12 @@ function App() {
 
       },
       prefill: {
-        name: "Soumya Dey",
-        email: "SoumyaDey@example.com",
+        name: "User",
+        email: "user@example.com",
         contact: "9999999999",
       },
       notes: {
-        address: "Soumya Dey Corporate Office",
+        address: "Bangalore",
       },
       theme: {
         color: "#61dafb",

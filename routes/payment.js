@@ -1,5 +1,6 @@
 const Razorpay = require("razorpay");
 const express = require("express");
+const uuid = require("uuid")
 const { saveTxn, saveOrders, getAllTxns } = require("../services/dbService");
 
 const router = express.Router();
@@ -11,10 +12,16 @@ router.post("/create-orders", async (req, res) => {
             key_secret: process.env.RAZORPAY_SECRET,
         });
 
+        const { amount, currency } = req.body;
+
+        if (!amount || !currency) throw "Missing parameters";
+
+        let receiptId = `receipt_order_${uuid.v4().split("-")[0]}`
+
         const options = {
-            amount: 50000, // amount in smallest currency unit
-            currency: "INR",
-            receipt: "receipt_order_74394",
+            amount: amount * 100, // amount in smallest currency unit
+            currency: currency,
+            receipt: receiptId
         };
 
         const order = await instance.orders.create(options);
